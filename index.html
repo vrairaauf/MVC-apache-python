@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<!--
+<form method="">
+	<input type="text" name="in1" value="mon premier input">
+	<input type="submit" name="submit" value="submit">
+</form>
+-->
+<h4>put request using xmlhttprequest</h4>
+<div class="result"></div>
+
+<script type="text/javascript">
+	function easyHTTP(){
+		this.http=new XMLHttpRequest();
+
+	}
+	easyHTTP.prototype.put=function (url, data , callback){
+		this.http.open('PUT', url, true);
+		this.http.setRequestHeader(
+				'Content-type', 'application/json'
+			);
+		let self=this;
+		this.http.onload=function(){
+			callback(null, self.http.responseText);
+		}
+		this.http.send(JSON.stringify(data))
+	}
+	const https=new easyHTTP;
+	const data={
+		 "id": 2,
+    	"date_created": "2022-03-16T20:42:28.563756Z",
+    	"date_updated": "2022-03-16T20:38:04.284051Z",
+    	"name": "Camera 4k GoPro",
+    	"description": "j'ai modifier cet contenu avec xmlhttprequest",
+    	"active": false,
+    	"category": 1
+	};
+	// https://jsonplaceholder.typicode.com/posts/5
+	https.put('http://localhost/store/product/rest2/2', data, function(err, post){
+		if(err){
+			console.log(err);
+		}else{
+			console.log(post);
+		}
+	});
+</script>
+</body>
+</html>
